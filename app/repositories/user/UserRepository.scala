@@ -13,7 +13,7 @@ trait UserRepositoryComponent {
 
     def updateUser(user: User): Boolean
 
-    def tryFindById(id: Long): Option[User]
+    def tryFindById(id: Int): Option[User]
 
     def delete(id: Long)
 

@@ -22,20 +22,20 @@ trait UserController extends Controller {
   }
   def createUser = Action(parse.json) { request =>
     unmarshalUserResource(request, (resource: UserResource) => {
-      val user = User(Option.empty,
-        resource.email)
+      val user = User(10,
+        resource.email, None)
       userService.createUser(user)
       Created
     })
   }
-  def updateUser(id: Long) = Action(parse.json) { request =>
+  def updateUser(id: Int) = Action(parse.json) { request =>
     unmarshalUserResource(request, (resource: UserResource) => {
-      val user = User(Option(id), resource.email)
+      val user = User(id, resource.email, None)
       if (userService.updateUser(user)) NoContent
       else NotFound
     })
   }
-  def findUserById(id: Long) = Action {
+  def findUserById(id: Int) = Action {
     val user = userService.tryFindById(id)
     
     if (user != null && user.isDefined) {
@@ -44,7 +44,7 @@ trait UserController extends Controller {
       NotFound
     }
   }
-  def deleteUser(id: Long) = Action {
+  def deleteUser(id: Int) = Action {
     userService.delete(id)
     NoContent
   }
