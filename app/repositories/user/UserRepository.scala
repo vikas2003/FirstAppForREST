@@ -2,6 +2,7 @@ package repositories.user
 
 import domain.user.User
 import java.util.concurrent.atomic.AtomicLong
+import domain.user.UserLookup
 
 trait UserRepositoryComponent {
   val userRepository: UserRepository
@@ -24,29 +25,30 @@ trait UserRepositoryComponentImpl extends UserRepositoryComponent {
 
   class UserRepositoryImpl extends UserRepository {
 
-    var users = Map[Long, User]()
+    var users = UserLookup.listUsers
     var idSequence = new AtomicLong(0)
 
     override def createUser(user: User): User = {
       val newId = idSequence.incrementAndGet()
-      val createdUser = user.copy(id = Option(newId))
-      users += (newId -> createdUser)
+      val createdUser = user.copy(id = newId)
+//      users += (newId -> createdUser)
       createdUser
     }
 
     override def updateUser(user: User): Boolean = {
-      if (users.contains(user.id.get)) {
-        users += (user.id.get -> user)
+      /*if (users.contains(user.id)) {
+//        users += (user.id.get -> user)
         true
-      } else false
+      } else false*/
+      true
     }
 
-    override def tryFindById(id: Long): Option[User] = {
+    override def tryFindById(id: Int): Option[User] = {
       users.get(id)
     }
 
     override def delete(id: Long) {
-      users -= (id)
+//      users -= (id)
     }
   }
 }
