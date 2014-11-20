@@ -6,6 +6,7 @@
 GET     /                           controllers.Application.index
 POST    /users                      controllers.Application.createUser
 GET     /users/:id                  controllers.Application.findUserById(id: Int)
+GET     /users/:id                  controllers.Application.findUserFieldsById(id: Int, fields: Option[String] ?= None)
 PUT     /users/:id                  controllers.Application.updateUser(id: Int)
 DELETE  /users/:id                  controllers.Application.deleteUser(id: Int)
 

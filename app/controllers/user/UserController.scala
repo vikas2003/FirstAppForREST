@@ -44,6 +44,19 @@ trait UserController extends Controller {
       NotFound
     }
   }
+  
+  def findUserFieldsById(id: Int, fields: Option[String]) = Action {
+    val user = userService.tryFindById(id)
+    
+    println("fields: " + fields)
+    
+    if (user != null && user.isDefined) {
+      Ok(Json.toJson(user))
+    } else {
+      NotFound
+    }
+  }
+  
   def deleteUser(id: Int) = Action {
     userService.delete(id)
     NoContent
